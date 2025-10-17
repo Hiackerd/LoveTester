@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoveMatch - Partner-Chemie-Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #a1c4fd 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 107, 107, 0.4);
+            font-size: 1.2rem;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        .heart:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .heart:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
+        .heart:nth-child(3) { bottom: 30%; left: 15%; animation-delay: 2s; }
+        .heart:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 3s; }
+        .heart:nth-child(5) { top: 40%; left: 5%; animation-delay: 4s; }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .description {
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+        
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            text-align: left;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: #f9f9f9;
+        }
+        
+        input:focus {
+            border-color: #ff6b6b;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff6b6b;
+            font-size: 1.2rem;
+        }
+        
+        button {
+            background: linear-gradient(to right, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 18px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.5);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        button:hover::after {
+            left: 100%;
+        }
+        
+        .result {
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #fff5f5 0%, #f0f8ff 100%);
+            display: none;
+            animation: slideUp 0.5s ease-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #ff6b6b, #a1c4fd);
+        }
+        
+        .names {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .heart-icon {
+            color: #ff6b6b;
+            font-size: 2rem;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .percentage-container {
+            position: relative;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        
+        .percentage {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: countUp 1.5s ease-out;
+        }
+        
+        @keyframes countUp {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .message {
+            color: #555;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .special-note {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #888;
+            font-style: italic;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .compatibility-bar {
+            height: 12px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 25px 0;
+            overflow: hidden;
+        }
+        
+        .compatibility-fill {
+            height: 100%;
+            background: linear-gradient(to right, #ff6b6b, #a1c4fd);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1.5s ease-out;
+        }
+        
+        .fireworks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 2;
+            display: none;
+        }
+        
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: #ff6b6b;
+            animation: explode 1s forwards;
+        }
+        
+        @keyframes explode {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)); opacity: 0; }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .percentage {
+                font-size: 3rem;
+            }
+            
+            .names {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="floating-hearts">
+            <div class="heart"><i class="fas fa-heart"></i></div>
+            <div class="heart"><i class="fas fa-heart"></i></div>
+            <div class="heart"><i class="fas fa-heart"></i></div>
+            <div class="heart"><i class="fas fa-heart"></i></div>
+            <div class="heart"><i class="fas fa-heart"></i></div>
+        </div>
+        
+        <div class="content">
+            <h1><i class="fas fa-heart"></i> LoveMatch <i class="fas fa-heart"></i></h1>
+            <p class="description">Finde heraus, wie gut ihr zusammenpasst! Gebe zwei Namen ein und entdecke die magische Chemie zwischen euch.</p>
+            
+            <div class="input-container">
+                <div class="input-group">
+                    <label for="name1"><i class="fas fa-user"></i> Erster Name:</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="name1" placeholder="Gib einen Namen ein">
+                        <div class="input-icon"><i class="fas fa-heart"></i></div>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="name2"><i class="fas fa-user"></i> Zweiter Name:</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="name2" placeholder="Gib einen Namen ein">
+                        <div class="input-icon"><i class="fas fa-heart"></i></div>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="calculate">
+                <i class="fas fa-magic"></i> Chemie berechnen
+            </button>
+            
+            <div class="result" id="result">
+                <div class="names">
+                    <span id="displayName1"></span> 
+                    <div class="heart-icon"><i class="fas fa-heart"></i></div>
+                    <span id="displayName2"></span>
+                </div>
+                
+                <div class="compatibility-bar">
+                    <div class="compatibility-fill" id="compatibilityFill"></div>
+                </div>
+                
+                <div class="percentage-container">
+                    <div class="percentage" id="percentage">0%</div>
+                </div>
+                
+                <div class="message" id="message"></div>
+                <div class="special-note" id="specialNote"></div>
+            </div>
+        </div>
+        
+        <div class="fireworks" id="fireworks"></div>
+    </div>
+
+    <script>
+        document.getElementById('calculate').addEventListener('click', function() {
+            const name1 = document.getElementById('name1').value.trim().toLowerCase();
+            const name2 = document.getElementById('name2').value.trim().toLowerCase();
+            
+            if (!name1 || !name2) {
+                alert('Bitte gib beide Namen ein!');
+                return;
+            }
+            
+            // Namen für die Anzeige in Originalformat speichern
+            const displayName1 = document.getElementById('name1').value.trim();
+            const displayName2 = document.getElementById('name2').value.trim();
+            
+            document.getElementById('displayName1').textContent = displayName1;
+            document.getElementById('displayName2').textContent = displayName2;
+            
+            let percentage;
+            let message = "";
+            let specialNote = "";
+            
+            // Spezielle Paare - unabhängig von der Reihenfolge
+            if ((name1 === 'maxi' && name2 === 'alex') || (name1 === 'alex' && name2 === 'maxi')) {
+                percentage = 100;
+                message = "💕 Perfekte Kombination! Diese Verbindung ist einfach magisch! 💕";
+                specialNote = "Maxi und Alex sind ein besonderes Paar - eine Verbindung für die Ewigkeit!";
+            } 
+            else if ((name1 === 'arne' && name2 === 'emilia') || (name1 === 'emilia' && name2 === 'arne')) {
+                percentage = 100;
+                message = "🌟 Traumpaar! Eure Verbindung ist einfach unschlagbar! 🌟";
+                specialNote = "Arne und Emilia sind ein besonderes Paar - eine Liebe wie aus dem Märchen!";
+            } 
+            else {
+                // Zufällige Prozentzahl für andere Kombinationen
+                percentage = Math.floor(Math.random() * 101);
+                
+                // Passende Nachrichten basierend auf dem Prozentsatz
+                if (percentage >= 90) {
+                    message = "💖 Unglaublich! Ihr seid wie füreinander gemacht! 💖";
+                } else if (percentage >= 75) {
+                    message = "😍 Sehr gute Chemie! Das könnte was werden! 😍";
+                } else if (percentage >= 60) {
+                    message = "😊 Gute Voraussetzungen für eine schöne Beziehung! 😊";
+                } else if (percentage >= 40) {
+                    message = "🤔 Es gibt Potential, aber auch einige Herausforderungen.";
+                } else if (percentage >= 20) {
+                    message = "😟 Vielleicht braucht es etwas mehr Arbeit an der Beziehung.";
+                } else {
+                    message = "😅 Hmm... vielleicht solltet ihr euch erstmal besser kennenlernen.";
+                }
+            }
+            
+            // Ergebnis anzeigen
+            document.getElementById('percentage').textContent = percentage + '%';
+            document.getElementById('message').textContent = message;
+            document.getElementById('specialNote').textContent = specialNote;
+            
+            // Kompatibilitätsbalken animieren
+            const fill = document.getElementById('compatibilityFill');
+            fill.style.width = '0%';
+            setTimeout(() => {
+                fill.style.width = percentage + '%';
+            }, 100);
+            
+            // Ergebnis-Box anzeigen
+            document.getElementById('result').style.display = 'block';
+            
+            // Feuerwerk für hohe Prozentzahlen
+            if (percentage >= 80) {
+                createFireworks();
+            }
+        });
+        
+        function createFireworks() {
+            const fireworks = document.getElementById('fireworks');
+            fireworks.style.display = 'block';
+            fireworks.innerHTML = '';
+            
+            for (let i = 0; i < 50; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                
+                // Zufällige Position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Zufällige Bewegung
+                const tx = (Math.random() - 0.5) * 200;
+                const ty = (Math.random() - 0.5) * 200;
+                
+                firework.style.left = x + '%';
+                firework.style.top = y + '%';
+                firework.style.setProperty('--tx', tx + 'px');
+                firework.style.setProperty('--ty', ty + 'px');
+                
+                // Zufällige Farbe
+                const colors = ['#ff6b6b', '#ff8e8e', '#a1c4fd', '#ffd93d', '#6bcf7f'];
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                fireworks.appendChild(firework);
+                
+                // Nach der Animation entfernen
+                setTimeout(() => {
+                    firework.remove();
+                }, 1000);
+            }
+            
+            // Feuerwerk nach 1.5 Sekunden ausblenden
+            setTimeout(() => {
+                fireworks.style.display = 'none';
+            }, 1500);
+        }
+        
+        // Eingabefelder mit Enter-Taste bedienbar machen
+        document.getElementById('name1').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('calculate').click();
+            }
+        });
+        
+        document.getElementById('name2').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('calculate').click();
+            }
+        });
+    </script>
+</body>
+</html>
