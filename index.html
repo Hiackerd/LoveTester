@@ -216,7 +216,7 @@
         function showVideoEasterEgg() {
             const container=document.getElementById('videoContainer');
             const video=document.getElementById('secretVideo');
-            video.src='https://www.w3schools.com/html/mov_bbb.mp4'; // Beispielvideo, ersetze mit eigenem
+            video.src='https://www.tiktok.com/@juventus/video/7551852758039645462'; // Beispielvideo, ersetze mit eigenem
             container.style.display='flex';
             video.play();
         }
@@ -229,7 +229,8 @@
         // Bann-Check
         async function checkBanStatus() {
             try {
-                const res = await fetch('https://deinusername.pythonanywhere.com/api/check');
+                const res = await fetch('https://johannes202002.pythonanywhere.com/
+');
                 const data = await res.json();
                 if (data.banned) showBanScreen(data.remaining);
                 else hideBanScreen();
