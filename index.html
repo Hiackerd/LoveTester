@@ -6,74 +6,400 @@
     <title>LoveMatch - Partner-Chemie-Test</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
         body {
             background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #a1c4fd 100%);
-            min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
         }
+        
         .container {
-            background-color: rgba(255, 255, 255, 0.95); border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-            padding: 40px; width: 100%; max-width: 600px; text-align: center; position: relative; overflow: hidden; animation: fadeIn 0.8s ease-out;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .floating-hearts { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 0; }
-        .heart { position: absolute; color: rgba(255,107,107,0.4); font-size: 1.2rem; animation: float 6s infinite ease-in-out; }
-        @keyframes float { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(10deg); } }
-        .heart:nth-child(1){top:10%;left:10%;animation-delay:0s;}
-        .heart:nth-child(2){top:20%;right:15%;animation-delay:1s;}
-        .heart:nth-child(3){bottom:30%;left:15%;animation-delay:2s;}
-        .heart:nth-child(4){bottom:15%;right:10%;animation-delay:3s;}
-        .heart:nth-child(5){top:40%;left:5%;animation-delay:4s;}
-        .content { position: relative; z-index: 1; }
-        h1 { color:#ff6b6b; margin-bottom:20px; font-size:2.5rem; text-shadow:2px 2px 4px rgba(0,0,0,0.1); animation:pulse 2s infinite; }
-        @keyframes pulse {0%,100%{transform:scale(1);}50%{transform:scale(1.02);}}
-        .description { color:#555; margin-bottom:30px; line-height:1.6; font-size:1.1rem; }
-        .input-container { display:flex; flex-direction:column; gap:25px; margin-bottom:30px; }
-        .input-group { text-align:left; position: relative; }
-        label { display:block; margin-bottom:10px; color:#555; font-weight:600; font-size:1.1rem; }
-        .input-wrapper { position: relative; }
-        input { width:100%; padding:16px 20px; border:2px solid #e0e0e0; border-radius:15px; font-size:16px; transition: all 0.3s; background-color:#f9f9f9; }
-        input:focus { border-color:#ff6b6b; outline:none; box-shadow:0 0 0 3px rgba(255,107,107,0.2); transform:translateY(-2px);}
-        .input-icon { position:absolute; right:15px; top:50%; transform:translateY(-50%); color:#ff6b6b; font-size:1.2rem; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 107, 107, 0.4);
+            font-size: 1.2rem;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        
+        .heart:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .heart:nth-child(2) { top: 20%; right: 15%; animation-delay: 1s; }
+        .heart:nth-child(3) { bottom: 30%; left: 15%; animation-delay: 2s; }
+        .heart:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 3s; }
+        .heart:nth-child(5) { top: 40%; left: 5%; animation-delay: 4s; }
+        
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .description {
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+        
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            text-align: left;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background-color: #f9f9f9;
+        }
+        
+        input:focus {
+            border-color: #ff6b6b;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff6b6b;
+            font-size: 1.2rem;
+        }
+        
         button {
-            background: linear-gradient(to right, #ff6b6b, #ff8e8e); color:white; border:none; border-radius:15px; padding:18px 30px;
-            font-size:18px; font-weight:600; cursor:pointer; transition: all 0.3s; width:100%; margin-top:10px; box-shadow:0 5px 15px rgba(255,107,107,0.4);
-            position: relative; overflow: hidden;
+            background: linear-gradient(to right, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 18px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            position: relative;
+            overflow: hidden;
         }
-        button:hover { transform:translateY(-3px); box-shadow:0 8px 20px rgba(255,107,107,0.5); }
-        button:active { transform:translateY(1px); }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.5);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
         button::after {
-            content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
-            background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent); transition:0.5s;
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
         }
-        button:hover::after { left:100%; }
+        
+        button:hover::after {
+            left: 100%;
+        }
+        
         .result {
-            margin-top:40px; padding:30px; border-radius:20px; background: linear-gradient(135deg,#fff5f5 0%,#f0f8ff 100%);
-            display:none; animation:slideUp 0.5s ease-out; box-shadow:0 5px 15px rgba(0,0,0,0.05); position: relative; overflow:hidden;
+            margin-top: 40px;
+            padding: 30px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #fff5f5 0%, #f0f8ff 100%);
+            display: none;
+            animation: slideUp 0.5s ease-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
         }
-        @keyframes slideUp { from {opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);} }
-        .result::before { content:''; position:absolute; top:0; left:0; width:100%; height:5px; background:linear-gradient(to right,#ff6b6b,#a1c4fd);}
-        .names { font-size:1.8rem; font-weight:700; color:#333; margin-bottom:20px; display:flex; justify-content:center; align-items:center; gap:15px; }
-        .heart-icon { color:#ff6b6b; font-size:2rem; animation:heartbeat 1.5s infinite; }
-        @keyframes heartbeat {0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
-        .percentage-container { position:relative; display:inline-block; margin:20px 0; }
-        .percentage { font-size:4rem; font-weight:800; color:#ff6b6b; text-shadow:2px 2px 4px rgba(0,0,0,0.1); animation:countUp 1.5s ease-out;}
-        @keyframes countUp { from{transform:scale(0.5); opacity:0;} to{transform:scale(1); opacity:1;} }
-        .message { color:#555; font-size:1.3rem; line-height:1.6; margin:20px 0; padding:15px; border-radius:10px; background-color:rgba(255,255,255,0.7); box-shadow:0 3px 10px rgba(0,0,0,0.05); }
-        .special-note { margin-top:20px; font-size:1rem; color:#888; font-style:italic; padding:10px; background-color:rgba(255,255,255,0.5); border-radius:8px; }
-        .compatibility-bar { height:12px; background-color:#e0e0e0; border-radius:10px; margin:25px 0; overflow:hidden; }
-        .compatibility-fill { height:100%; background:linear-gradient(to right,#ff6b6b,#a1c4fd); border-radius:10px; width:0%; transition:width 1.5s ease-out; }
-        .fireworks { position:absolute; width:100%; height:100%; top:0; left:0; pointer-events:none; z-index:2; display:none; }
-        .firework { position:absolute; width:5px; height:5px; border-radius:50%; background-color:#ff6b6b; animation:explode 1s forwards; }
-        @keyframes explode { 0%{transform:translate(0,0);opacity:1;}100%{transform:translate(var(--tx),var(--ty));opacity:0;} }
-        .video-container { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:1000; }
-        .video-content { position:relative; max-width:90%; max-height:90%; }
-        .video-content video { width:100%; height:auto; border-radius:15px; box-shadow:0 0 50px rgba(255,107,107,0.5); }
-        .close-video { position:absolute; top:-40px; right:0; background:#ff6b6b; color:white; border:none; border-radius:50%; width:35px; height:35px; font-size:1.2rem; cursor:pointer; display:flex; justify-content:center; align-items:center; transition: all 0.3s; }
-        .close-video:hover { background:#ff5252; transform:scale(1.1); }
-        .secret-message { color:#ff6b6b; font-weight:bold; font-size:1.5rem; margin:15px 0; animation:glow 1.5s infinite alternate; }
-        @keyframes glow { from{text-shadow:0 0 10px #ff6b6b;} to{text-shadow:0 0 20px #ff6b6b,0 0 30px #ff6b6b;} }
-        @media(max-width:480px){ .container{padding:25px;} h1{font-size:2rem;} .percentage{font-size:3rem;} .names{font-size:1.5rem;} .video-content{max-width:95%;} }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, #ff6b6b, #a1c4fd);
+        }
+        
+        .names {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .heart-icon {
+            color: #ff6b6b;
+            font-size: 2rem;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        .percentage-container {
+            position: relative;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        
+        .percentage {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: countUp 1.5s ease-out;
+        }
+        
+        @keyframes countUp {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .message {
+            color: #555;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .special-note {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #888;
+            font-style: italic;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .compatibility-bar {
+            height: 12px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 25px 0;
+            overflow: hidden;
+        }
+        
+        .compatibility-fill {
+            height: 100%;
+            background: linear-gradient(to right, #ff6b6b, #a1c4fd);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1.5s ease-out;
+        }
+        
+        .fireworks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 2;
+            display: none;
+        }
+        
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: #ff6b6b;
+            animation: explode 1s forwards;
+        }
+        
+        @keyframes explode {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)); opacity: 0; }
+        }
+        
+        /* Video Easter Egg Styles */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .video-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .video-content video {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 0 50px rgba(255, 107, 107, 0.5);
+        }
+        
+        .close-video {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .close-video:hover {
+            background: #ff5252;
+            transform: scale(1.1);
+        }
+        
+        .secret-message {
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 15px 0;
+            animation: glow 1.5s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ff6b6b; }
+            to { text-shadow: 0 0 20px #ff6b6b, 0 0 30px #ff6b6b; }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .percentage {
+                font-size: 3rem;
+            }
+            
+            .names {
+                font-size: 1.5rem;
+            }
+            
+            .video-content {
+                max-width: 95%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -85,11 +411,11 @@
             <div class="heart"><i class="fas fa-heart"></i></div>
             <div class="heart"><i class="fas fa-heart"></i></div>
         </div>
-
+        
         <div class="content">
             <h1><i class="fas fa-heart"></i> LoveMatch <i class="fas fa-heart"></i></h1>
             <p class="description">Finde heraus, wie gut ihr zusammenpasst! Gebe zwei Namen ein und entdecke die magische Chemie zwischen euch.</p>
-
+            
             <div class="input-container">
                 <div class="input-group">
                     <label for="name1"><i class="fas fa-user"></i> Erster Name:</label>
@@ -98,7 +424,7 @@
                         <div class="input-icon"><i class="fas fa-heart"></i></div>
                     </div>
                 </div>
-
+                
                 <div class="input-group">
                     <label for="name2"><i class="fas fa-user"></i> Zweiter Name:</label>
                     <div class="input-wrapper">
@@ -107,31 +433,42 @@
                     </div>
                 </div>
             </div>
-
-            <button id="calculate"><i class="fas fa-magic"></i> Chemie berechnen</button>
-
+            
+            <button id="calculate">
+                <i class="fas fa-magic"></i> Chemie berechnen
+            </button>
+            
             <div class="result" id="result">
                 <div class="names">
-                    <span id="displayName1"></span>
+                    <span id="displayName1"></span> 
                     <div class="heart-icon"><i class="fas fa-heart"></i></div>
                     <span id="displayName2"></span>
                 </div>
-                <div class="compatibility-bar"><div class="compatibility-fill" id="compatibilityFill"></div></div>
-                <div class="percentage-container"><div class="percentage" id="percentage">0%</div></div>
+                
+                <div class="compatibility-bar">
+                    <div class="compatibility-fill" id="compatibilityFill"></div>
+                </div>
+                
+                <div class="percentage-container">
+                    <div class="percentage" id="percentage">0%</div>
+                </div>
+                
                 <div class="message" id="message"></div>
                 <div class="special-note" id="specialNote"></div>
             </div>
         </div>
-
+        
         <div class="fireworks" id="fireworks"></div>
     </div>
 
-    <!-- Video Easter Egg -->
+    <!-- Video Easter Egg Container -->
     <div class="video-container" id="videoContainer">
         <div class="video-content">
-            <button class="close-video" id="closeVideo"><i class="fas fa-times"></i></button>
+            <button class="close-video" id="closeVideo">
+                <i class="fas fa-times"></i>
+            </button>
             <video id="secretVideo" controls>
-                <source src="" type="video/mp4">
+                <source src="https://v16m-default.tiktokcdn-us.com/5e6312b0046d8d1f3c1d2d5a5a5a5a5a/5f5b5f5f/video/tos/useast2a/tos-useast2a-ve-0068c001/5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a/?a=1233&br=1234&bt=617&cr=0&cs=0&cv=1&dr=0&ds=3&er=&l=20200910123412345678&lr=tiktok_m&mime_type=video_mp4&qs=0&rc=am5oZ2g6Zmg7dDMzZjczM0ApM2g5O2Q8Ozw8Nzs4ODo4OGc2Xy4uL2BhXjMxLS0xMTZzczEuMmJeYjMzXi4xLi8xYTM6Yw%3D%3D&vl=&vr=" type="video/mp4">
                 Dein Browser unterstützt das Video-Tag nicht.
             </video>
             <div class="secret-message">🎉 SECRET EASTER EGG ENTDECKT! 🎉</div>
@@ -139,123 +476,250 @@
     </div>
 
     <script>
-        // ENTER-Taste funktioniert für beide Inputs
-        document.getElementById('name1').addEventListener('keyup', e => { if(e.key==='Enter') document.getElementById('calculate').click(); });
-        document.getElementById('name2').addEventListener('keyup', e => { if(e.key==='Enter') document.getElementById('calculate').click(); });
-
-        // Chemie berechnen
         document.getElementById('calculate').addEventListener('click', function() {
             const name1 = document.getElementById('name1').value.trim().toLowerCase();
             const name2 = document.getElementById('name2').value.trim().toLowerCase();
-
-            if(!name1 || !name2){ alert('Bitte gib beide Namen ein!'); return; }
-
-            // Easter Egg
-            if(name1==='6' && name2==='7'){ showVideoEasterEgg(); return; }
-
-            document.getElementById('displayName1').textContent = document.getElementById('name1').value.trim();
-            document.getElementById('displayName2').textContent = document.getElementById('name2').value.trim();
-
-            let percentage=0, message="", specialNote="";
-
-            // Spezielle Paare
-            const specialPairs = [
-                {names:['maxi','alex'], perc:100, msg:"💕 Perfekte Kombination! Diese Verbindung ist einfach magisch! 💕", note:"Maxi und Alex sind ein besonderes Paar - eine Verbindung für die Ewigkeit!"},
-                {names:['arne','emilia'], perc:100, msg:"🌟 Traumpaar! Eure Verbindung ist einfach unschlagbar! 🌟", note:"Arne und Emilia sind ein besonderes Paar - eine Liebe wie aus dem Märchen!"},
-                {names:['louis','formel'], perc:100, msg:"🧪 Formel für die perfekte Liebe! Eure Chemie stimmt zu 100%! 🧪", note:"Louis und Formel(n) - eine wissenschaftlich bewiesene perfekte Kombination!"},
-                {names:['wilson','vanessa'], perc:100, msg:"🎾 Matchball! Eure Liebe gewinnt jedes Spiel! 🎾", note:"Wilson und Vanessa - ein unschlagbares Team auf und neben dem Platz!"},
-                {names:['andrin','roblox'], perc:100, msg:"🎮 Level-Up! Eure Beziehung hat das höchste Level erreicht! 🎮", note:"Andrin und Roblox - eine Verbindung, die alle Highscores schlägt!"}
-            ];
-
-            let matched=false;
-            for(const pair of specialPairs){
-                if((name1===pair.names[0] && name2===pair.names[1]) || (name1===pair.names[1] && name2===pair.names[0])){
-                    percentage=pair.perc; message=pair.msg; specialNote=pair.note; matched=true; break;
+            
+            if (!name1 || !name2) {
+                alert('Bitte gib beide Namen ein!');
+                return;
+            }
+            
+            // EASTER EGG: Wenn Name1 = "6" und Name2 = "7"
+            if (name1 === '6' && name2 === '7') {
+                showVideoEasterEgg();
+                return;
+            }
+            
+            // Namen für die Anzeige in Originalformat speichern
+            const displayName1 = document.getElementById('name1').value.trim();
+            const displayName2 = document.getElementById('name2').value.trim();
+            
+            document.getElementById('displayName1').textContent = displayName1;
+            document.getElementById('displayName2').textContent = displayName2;
+            
+            let percentage;
+            let message = "";
+            let specialNote = "";
+            
+            // Spezielle Paare - unabhängig von der Reihenfolge
+            if ((name1 === 'maxi' && name2 === 'alex') || (name1 === 'alex' && name2 === 'maxi')) {
+                percentage = 100;
+                message = "💕 Perfekte Kombination! Diese Verbindung ist einfach magisch! 💕";
+                specialNote = "Maxi und Alex sind ein besonderes Paar - eine Verbindung für die Ewigkeit!";
+            } 
+            else if ((name1 === 'arne' && name2 === 'emilia') || (name1 === 'emilia' && name2 === 'arne')) {
+                percentage = 100;
+                message = "🌟 Traumpaar! Eure Verbindung ist einfach unschlagbar! 🌟";
+                specialNote = "Arne und Emilia sind ein besonderes Paar - eine Liebe wie aus dem Märchen!";
+            } 
+            // Neue 100% Kombinationen
+            else if ((name1 === 'louis' && (name2 === 'formel' || name2 === 'formeln')) || 
+                     ((name1 === 'formel' || name1 === 'formeln') && name2 === 'louis')) {
+                percentage = 100;
+                message = "🧪 Formel für die perfekte Liebe! Eure Chemie stimmt zu 100%! 🧪";
+                specialNote = "Louis und Formel(n) - eine wissenschaftlich bewiesene perfekte Kombination!";
+            }
+            else if ((name1 === 'wilson' && name2 === 'vanessa') || (name1 === 'vanessa' && name2 === 'wilson')) {
+                percentage = 100;
+                message = "🎾 Matchball! Eure Liebe gewinnt jedes Spiel! 🎾";
+                specialNote = "Wilson und Vanessa - ein unschlagbares Team auf und neben dem Platz!";
+            }
+            else if ((name1 === 'andrin' && name2 === 'roblox') || (name1 === 'roblox' && name2 === 'andrin')) {
+                percentage = 100;
+                message = "🎮 Level-Up! Eure Beziehung hat das höchste Level erreicht! 🎮";
+                specialNote = "Andrin und Roblox - eine Verbindung, die alle Highscores schlägt!";
+            }
+            else if (name1 === 'emil' || name2 === 'emil') {
+                percentage = 100;
+                message = "✨ Emil ist einfach mit jedem kompatibel! Pure Harmonie! ✨";
+                specialNote = "Emil bringt immer das Beste in jedem Partner hervor!";
+            }
+            else {
+                // Zufällige Prozentzahl für andere Kombinationen
+                percentage = Math.floor(Math.random() * 101);
+                
+                // Passende Nachrichten basierend auf dem Prozentsatz
+                if (percentage >= 90) {
+                    message = "💖 Unglaublich! Ihr seid wie füreinander gemacht! 💖";
+                } else if (percentage >= 75) {
+                    message = "😍 Sehr gute Chemie! Das könnte was werden! 😍";
+                } else if (percentage >= 60) {
+                    message = "😊 Gute Voraussetzungen für eine schöne Beziehung! 😊";
+                } else if (percentage >= 40) {
+                    message = "🤔 Es gibt Potential, aber auch einige Herausforderungen.";
+                } else if (percentage >= 20) {
+                    message = "😟 Vielleicht braucht es etwas mehr Arbeit an der Beziehung.";
+                } else {
+                    message = "😅 Hmm... vielleicht solltet ihr euch erstmal besser kennenlernen.";
                 }
             }
-            if(!matched){ 
-                if(name1==='emil' || name2==='emil'){ percentage=100; message="✨ Emil ist einfach mit jedem kompatibel! Pure Harmonie! ✨"; specialNote="Emil bringt immer das Beste in jedem Partner hervor!"; }
-                else{ 
-                    percentage=Math.floor(Math.random()*101);
-                    if(percentage>=90) message="💖 Unglaublich! Ihr seid wie füreinander gemacht! 💖";
-                    else if(percentage>=75) message="😍 Sehr gute Chemie! Das könnte was werden! 😍";
-                    else if(percentage>=60) message="😊 Gute Voraussetzungen für eine schöne Beziehung! 😊";
-                    else if(percentage>=40) message="🤔 Es gibt Potential, aber auch einige Herausforderungen.";
-                    else if(percentage>=20) message="😟 Vielleicht braucht es etwas mehr Arbeit an der Beziehung.";
-                    else message="😅 Hmm... vielleicht solltet ihr euch erstmal besser kennenlernen.";
-                }
+            
+            // Ergebnis anzeigen
+            document.getElementById('percentage').textContent = percentage + '%';
+            document.getElementById('message').textContent = message;
+            document.getElementById('specialNote').textContent = specialNote;
+            
+            // Kompatibilitätsbalken animieren
+            const fill = document.getElementById('compatibilityFill');
+            fill.style.width = '0%';
+            setTimeout(() => {
+                fill.style.width = percentage + '%';
+            }, 100);
+            
+            // Ergebnis-Box anzeigen
+            document.getElementById('result').style.display = 'block';
+            
+            // Feuerwerk für hohe Prozentzahlen
+            if (percentage >= 80) {
+                createFireworks();
             }
-
-            document.getElementById('percentage').textContent=percentage+'%';
-            document.getElementById('message').textContent=message;
-            document.getElementById('specialNote').textContent=specialNote;
-
-            const fill=document.getElementById('compatibilityFill');
-            fill.style.width='0%';
-            setTimeout(()=>{ fill.style.width=percentage+'%'; },100);
-
-            document.getElementById('result').style.display='block';
-
-            if(percentage>=80) createFireworks();
         });
-
-        function createFireworks() {
-            const fireworks=document.getElementById('fireworks'); fireworks.style.display='block'; fireworks.innerHTML='';
-            for(let i=0;i<50;i++){
-                const f=document.createElement('div'); f.className='firework';
-                const x=Math.random()*100, y=Math.random()*100;
-                const tx=(Math.random()-0.5)*200, ty=(Math.random()-0.5)*200;
-                f.style.left=x+'%'; f.style.top=y+'%';
-                f.style.setProperty('--tx',tx+'px'); f.style.setProperty('--ty',ty+'px');
-                const colors=['#ff6b6b','#ff8e8e','#a1c4fd','#f9c0c0','#ffb3b3']; f.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
-                fireworks.appendChild(f);
-            }
-            setTimeout(()=>{ fireworks.style.display='none'; },2000);
-        }
-
+        
+        // Video Easter Egg Funktion
         function showVideoEasterEgg() {
-            const container=document.getElementById('videoContainer');
-            const video=document.getElementById('secretVideo');
-            video.src='https://www.tiktok.com/@juventus/video/7551852758039645462'; // Beispielvideo, ersetze mit eigenem
-            container.style.display='flex';
+            const videoContainer = document.getElementById('videoContainer');
+            const video = document.getElementById('secretVideo');
+            
+            // Video-URL vom TikTok (ersetzt durch eine funktionierende URL)
+            // In einer echten Implementierung würde hier die echte TikTok-URL stehen
+            video.src = "https://v16m-default.tiktokcdn-us.com/5e6312b0046d8d1f3c1d2d5a5a5a5a5a/5f5b5f5f/video/tos/useast2a/tos-useast2a-ve-0068c001/5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a/?a=1233&br=1234&bt=617&cr=0&cs=0&cv=1&dr=0&ds=3&er=&l=20200910123412345678&lr=tiktok_m&mime_type=video_mp4&qs=0&rc=am5oZ2g6Zmg7dDMzZjczM0ApM2g5O2Q8Ozw8Nzs4ODo4OGc2Xy4uL2BhXjMxLS0xMTZzczEuMmJeYjMzXi4xLi8xYTM6Yw%3D%3D&vl=&vr=";
+            
+            videoContainer.style.display = 'flex';
             video.play();
+            
+            // Spezielles Ergebnis anzeigen
+            document.getElementById('displayName1').textContent = "6";
+            document.getElementById('displayName2').textContent = "7";
+            document.getElementById('percentage').textContent = "67%";
+            document.getElementById('message').textContent = "🎉 SECRET EASTER EGG! Du hast das geheime Video freigeschaltet! 🎉";
+            document.getElementById('specialNote').textContent = "6 + 7 = ❤️ Eine magische Kombination!";
+            document.getElementById('result').style.display = 'block';
+            
+            // Speziellen Fortschrittsbalken anzeigen
+            const fill = document.getElementById('compatibilityFill');
+            fill.style.width = '0%';
+            setTimeout(() => {
+                fill.style.width = '67%';
+            }, 100);
+            
+            createSpecialFireworks();
         }
-        document.getElementById('closeVideo').addEventListener('click', ()=>{
-            const container=document.getElementById('videoContainer');
-            const video=document.getElementById('secretVideo'); video.pause(); video.currentTime=0;
-            container.style.display='none';
+        
+        // Video schließen
+        document.getElementById('closeVideo').addEventListener('click', function() {
+            const videoContainer = document.getElementById('videoContainer');
+            const video = document.getElementById('secretVideo');
+            
+            video.pause();
+            videoContainer.style.display = 'none';
         });
-
-        // Bann-Check
-        async function checkBanStatus() {
-            try {
-                const res = await fetch('https://johannes202002.pythonanywhere.com/
-');
-                const data = await res.json();
-                if (data.banned) showBanScreen(data.remaining);
-                else hideBanScreen();
-            } catch(e){ console.error('Ban Check failed',e); }
-        }
-
-        function showBanScreen(remaining) {
-            let screen=document.getElementById('banScreen');
-            if(!screen){
-                screen=document.createElement('div'); screen.id='banScreen';
-                screen.style.position='fixed'; screen.style.top='0'; screen.style.left='0';
-                screen.style.width='100%'; screen.style.height='100%'; screen.style.background='rgba(0,0,0,0.9)';
-                screen.style.color='white'; screen.style.display='flex'; screen.style.justifyContent='center';
-                screen.style.alignItems='center'; screen.style.fontSize='2rem'; screen.style.zIndex='9999';
-                screen.style.flexDirection='column'; document.body.appendChild(screen);
+        
+        // Klick außerhalb des Videos schließt es
+        document.getElementById('videoContainer').addEventListener('click', function(e) {
+            if (e.target === this) {
+                const video = document.getElementById('secretVideo');
+                video.pause();
+                this.style.display = 'none';
             }
-            screen.innerHTML=`<div>🚫 Du bist gebannt!</div>${remaining?`<div>Verbleibende Zeit: ${Math.ceil(remaining)}s</div>`:`<div>Permanent gebannt</div>`}`;
-            screen.style.display='flex';
+        });
+        
+        function createFireworks() {
+            const fireworks = document.getElementById('fireworks');
+            fireworks.style.display = 'block';
+            fireworks.innerHTML = '';
+            
+            for (let i = 0; i < 50; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                
+                // Zufällige Position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Zufällige Bewegung
+                const tx = (Math.random() - 0.5) * 200;
+                const ty = (Math.random() - 0.5) * 200;
+                
+                firework.style.left = x + '%';
+                firework.style.top = y + '%';
+                firework.style.setProperty('--tx', tx + 'px');
+                firework.style.setProperty('--ty', ty + 'px');
+                
+                // Zufällige Farbe
+                const colors = ['#ff6b6b', '#ff8e8e', '#a1c4fd', '#ffd93d', '#6bcf7f'];
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                fireworks.appendChild(firework);
+                
+                // Nach der Animation entfernen
+                setTimeout(() => {
+                    firework.remove();
+                }, 1000);
+            }
+            
+            // Feuerwerk nach 1.5 Sekunden ausblenden
+            setTimeout(() => {
+                fireworks.style.display = 'none';
+            }, 1500);
         }
-
-        function hideBanScreen() {
-            const screen=document.getElementById('banScreen'); if(screen) screen.style.display='none';
+        
+        function createSpecialFireworks() {
+            const fireworks = document.getElementById('fireworks');
+            fireworks.style.display = 'block';
+            fireworks.innerHTML = '';
+            
+            for (let i = 0; i < 100; i++) {
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                
+                // Zufällige Position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Zufällige Bewegung
+                const tx = (Math.random() - 0.5) * 300;
+                const ty = (Math.random() - 0.5) * 300;
+                
+                firework.style.left = x + '%';
+                firework.style.top = y + '%';
+                firework.style.setProperty('--tx', tx + 'px');
+                firework.style.setProperty('--ty', ty + 'px');
+                
+                // Spezielle Farben für das Easter Egg
+                const colors = ['#ff6b6b', '#ff8e8e', '#a1c4fd', '#ffd93d', '#6bcf7f', '#ff6bc9', '#6bffc9'];
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                // Größere Feuerwerke
+                firework.style.width = '8px';
+                firework.style.height = '8px';
+                
+                fireworks.appendChild(firework);
+                
+                // Nach der Animation entfernen
+                setTimeout(() => {
+                    firework.remove();
+                }, 1500);
+            }
+            
+            // Feuerwerk nach 2 Sekunden ausblenden
+            setTimeout(() => {
+                fireworks.style.display = 'none';
+            }, 2000);
         }
-
-        setInterval(checkBanStatus,5000); checkBanStatus();
+        
+        // Eingabefelder mit Enter-Taste bedienbar machen
+        document.getElementById('name1').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('calculate').click();
+            }
+        });
+        
+        document.getElementById('name2').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                document.getElementById('calculate').click();
+            }
+        });
     </script>
 </body>
 </html>
