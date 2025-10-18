@@ -415,55 +415,50 @@
             let specialNote = "";
             
             // Spezielle Paare - unabhängig von der Reihenfolge
-            if ((name1 === 'maxi' && name2 === 'alex') || (name1 === 'alex' && name2 === 'maxi')) {
-                percentage = 100;
-                message = "💕 Perfekte Kombination! Diese Verbindung ist einfach magisch! 💕";
-                specialNote = "Maxi und Alex sind ein besonderes Paar - eine Verbindung für die Ewigkeit!";
-            } 
-            else if ((name1 === 'arne' && name2 === 'emilia') || (name1 === 'emilia' && name2 === 'arne')) {
-                percentage = 100;
-                message = "🌟 Traumpaar! Eure Verbindung ist einfach unschlagbar! 🌟";
-                specialNote = "Arne und Emilia sind ein besonderes Paar - eine Liebe wie aus dem Märchen!";
-            } 
-            // Neue 100% Kombinationen
-            else if ((name1 === 'louis' && (name2 === 'formel' || name2 === 'formeln')) || 
-                     ((name1 === 'formel' || name1 === 'formeln') && name2 === 'louis')) {
-                percentage = 100;
-                message = "🧪 Formel für die perfekte Liebe! Eure Chemie stimmt zu 100%! 🧪";
-                specialNote = "Louis und Formel(n) - eine wissenschaftlich bewiesene perfekte Kombination!";
+            const specialPairs = [
+                { names: ['maxi', 'alex'], perc: 100, msg: "💕 Perfekte Kombination! Diese Verbindung ist einfach magisch! 💕", note: "Maxi und Alex sind ein besonderes Paar - eine Verbindung für die Ewigkeit!" },
+                { names: ['arne', 'emilia'], perc: 100, msg: "🌟 Traumpaar! Eure Verbindung ist einfach unschlagbar! 🌟", note: "Arne und Emilia sind ein besonderes Paar - eine Liebe wie aus dem Märchen!" },
+                { names: ['louis', 'formel'], perc: 100, msg: "🧪 Formel für die perfekte Liebe! Eure Chemie stimmt zu 100%! 🧪", note: "Louis und Formel - eine wissenschaftlich bewiesene perfekte Kombination!" },
+                { names: ['louis', 'formeln'], perc: 100, msg: "🧪 Formel für die perfekte Liebe! Eure Chemie stimmt zu 100%! 🧪", note: "Louis und Formeln - eine wissenschaftlich bewiesene perfekte Kombination!" },
+                { names: ['wilson', 'vanessa'], perc: 100, msg: "🎾 Matchball! Eure Liebe gewinnt jedes Spiel! 🎾", note: "Wilson und Vanessa - ein unschlagbares Team auf und neben dem Platz!" },
+                { names: ['andrin', 'roblox'], perc: 100, msg: "🎮 Level-Up! Eure Beziehung hat das höchste Level erreicht! 🎮", note: "Andrin und Roblox - eine Verbindung, die alle Highscores schlägt!" }
+            ];
+
+            let foundSpecial = false;
+            for (const pair of specialPairs) {
+                if ((name1 === pair.names[0] && name2 === pair.names[1]) || 
+                    (name1 === pair.names[1] && name2 === pair.names[0])) {
+                    percentage = pair.perc;
+                    message = pair.msg;
+                    specialNote = pair.note;
+                    foundSpecial = true;
+                    break;
+                }
             }
-            else if ((name1 === 'wilson' && name2 === 'vanessa') || (name1 === 'vanessa' && name2 === 'wilson')) {
-                percentage = 100;
-                message = "🎾 Matchball! Eure Liebe gewinnt jedes Spiel! 🎾";
-                specialNote = "Wilson und Vanessa - ein unschlagbares Team auf und neben dem Platz!";
-            }
-            else if ((name1 === 'andrin' && name2 === 'roblox') || (name1 === 'roblox' && name2 === 'andrin')) {
-                percentage = 100;
-                message = "🎮 Level-Up! Eure Beziehung hat das höchste Level erreicht! 🎮";
-                specialNote = "Andrin und Roblox - eine Verbindung, die alle Highscores schlägt!";
-            }
-            else if (name1 === 'emil' || name2 === 'emil') {
-                percentage = 100;
-                message = "✨ Emil ist einfach mit jedem kompatibel! Pure Harmonie! ✨";
-                specialNote = "Emil bringt immer das Beste in jedem Partner hervor!";
-            }
-            else {
-                // Zufällige Prozentzahl für andere Kombinationen
-                percentage = Math.floor(Math.random() * 101);
-                
-                // Passende Nachrichten basierend auf dem Prozentsatz
-                if (percentage >= 90) {
-                    message = "💖 Unglaublich! Ihr seid wie füreinander gemacht! 💖";
-                } else if (percentage >= 75) {
-                    message = "😍 Sehr gute Chemie! Das könnte was werden! 😍";
-                } else if (percentage >= 60) {
-                    message = "😊 Gute Voraussetzungen für eine schöne Beziehung! 😊";
-                } else if (percentage >= 40) {
-                    message = "🤔 Es gibt Potential, aber auch einige Herausforderungen.";
-                } else if (percentage >= 20) {
-                    message = "😟 Vielleicht braucht es etwas mehr Arbeit an der Beziehung.";
+
+            if (!foundSpecial) {
+                if (name1 === 'emil' || name2 === 'emil') {
+                    percentage = 100;
+                    message = "✨ Emil ist einfach mit jedem kompatibel! Pure Harmonie! ✨";
+                    specialNote = "Emil bringt immer das Beste in jedem Partner hervor!";
                 } else {
-                    message = "😅 Hmm... vielleicht solltet ihr euch erstmal besser kennenlernen.";
+                    // Zufällige Prozentzahl für andere Kombinationen
+                    percentage = Math.floor(Math.random() * 101);
+                    
+                    // Passende Nachrichten basierend auf dem Prozentsatz
+                    if (percentage >= 90) {
+                        message = "💖 Unglaublich! Ihr seid wie füreinander gemacht! 💖";
+                    } else if (percentage >= 75) {
+                        message = "😍 Sehr gute Chemie! Das könnte was werden! 😍";
+                    } else if (percentage >= 60) {
+                        message = "😊 Gute Voraussetzungen für eine schöne Beziehung! 😊";
+                    } else if (percentage >= 40) {
+                        message = "🤔 Es gibt Potential, aber auch einige Herausforderungen.";
+                    } else if (percentage >= 20) {
+                        message = "😟 Vielleicht braucht es etwas mehr Arbeit an der Beziehung.";
+                    } else {
+                        message = "😅 Hmm... vielleicht solltet ihr euch erstmal besser kennenlernen.";
+                    }
                 }
             }
             
@@ -539,6 +534,11 @@
             if (event.key === 'Enter') {
                 document.getElementById('calculate').click();
             }
+        });
+
+        // Verbesserte Fehlerbehandlung
+        window.addEventListener('error', function(e) {
+            console.log('Fehler aufgetreten:', e.error);
         });
     </script>
 </body>
