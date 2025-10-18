@@ -315,79 +315,6 @@
             100% { transform: translate(var(--tx), var(--ty)); opacity: 0; }
         }
         
-        /* Video Easter Egg Styles */
-        .video-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            animation: fadeIn 0.5s ease-out;
-        }
-        
-        .video-content {
-            position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            text-align: center;
-        }
-        
-        .video-content video {
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 0 50px rgba(255, 107, 107, 0.5);
-            max-width: 400px;
-        }
-        
-        .close-video {
-            position: absolute;
-            top: -50px;
-            right: 0;
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s;
-        }
-        
-        .close-video:hover {
-            background: #ff5252;
-            transform: scale(1.1);
-        }
-        
-        .secret-message {
-            color: #ff6b6b;
-            font-weight: bold;
-            font-size: 1.5rem;
-            margin: 20px 0;
-            animation: glow 1.5s infinite alternate;
-        }
-        
-        @keyframes glow {
-            from { text-shadow: 0 0 10px #ff6b6b; }
-            to { text-shadow: 0 0 20px #ff6b6b, 0 0 30px #ff6b6b; }
-        }
-
-        .fallback-image {
-            display: none;
-            max-width: 300px;
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-        
         @media (max-width: 480px) {
             .container {
                 padding: 25px;
@@ -403,14 +330,6 @@
             
             .names {
                 font-size: 1.5rem;
-            }
-            
-            .video-content {
-                max-width: 95%;
-            }
-            
-            .video-content video {
-                max-width: 100%;
             }
         }
     </style>
@@ -474,40 +393,13 @@
         <div class="fireworks" id="fireworks"></div>
     </div>
 
-    <!-- Video Easter Egg Container -->
-    <div class="video-container" id="videoContainer">
-        <div class="video-content">
-            <button class="close-video" id="closeVideo">
-                <i class="fas fa-times"></i>
-            </button>
-            <video id="secretVideo" controls>
-                <!-- Fallback für GitHub Pages -->
-                <source src="https://assets.codepen.io/3364143/607-video.mp4" type="video/mp4">
-                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
-                Dein Browser unterstützt das Video-Tag nicht.
-            </video>
-            <img src="https://i.imgur.com/6L7E9jX.png" alt="6+7 Easter Egg" class="fallback-image" id="fallbackImage">
-            <div class="secret-message">🎉 SECRET EASTER EGG ENTDECKT! 🎉</div>
-            <p style="color: white; margin-top: 10px;">6 + 7 = ❤️ Eine magische Kombination!</p>
-        </div>
-    </div>
-
     <script>
-        // Prüfe ob wir auf GitHub Pages sind
-        const isGitHubPages = window.location.hostname.includes('github.io');
-
         document.getElementById('calculate').addEventListener('click', function() {
             const name1 = document.getElementById('name1').value.trim().toLowerCase();
             const name2 = document.getElementById('name2').value.trim().toLowerCase();
             
             if (!name1 || !name2) {
                 alert('Bitte gib beide Namen ein!');
-                return;
-            }
-            
-            // EASTER EGG: Wenn Name1 = "6" und Name2 = "7"
-            if (name1 === '6' && name2 === '7') {
-                showVideoEasterEgg();
                 return;
             }
             
@@ -523,50 +415,55 @@
             let specialNote = "";
             
             // Spezielle Paare - unabhängig von der Reihenfolge
-            const specialPairs = [
-                { names: ['maxi', 'alex'], perc: 100, msg: "💕 Perfekte Kombination! Diese Verbindung ist einfach magisch! 💕", note: "Maxi und Alex sind ein besonderes Paar - eine Verbindung für die Ewigkeit!" },
-                { names: ['arne', 'emilia'], perc: 100, msg: "🌟 Traumpaar! Eure Verbindung ist einfach unschlagbar! 🌟", note: "Arne und Emilia sind ein besonderes Paar - eine Liebe wie aus dem Märchen!" },
-                { names: ['louis', 'formel'], perc: 100, msg: "🧪 Formel für die perfekte Liebe! Eure Chemie stimmt zu 100%! 🧪", note: "Louis und Formel - eine wissenschaftlich bewiesene perfekte Kombination!" },
-                { names: ['louis', 'formeln'], perc: 100, msg: "🧪 Formel für die perfekte Liebe! Eure Chemie stimmt zu 100%! 🧪", note: "Louis und Formeln - eine wissenschaftlich bewiesene perfekte Kombination!" },
-                { names: ['wilson', 'vanessa'], perc: 100, msg: "🎾 Matchball! Eure Liebe gewinnt jedes Spiel! 🎾", note: "Wilson und Vanessa - ein unschlagbares Team auf und neben dem Platz!" },
-                { names: ['andrin', 'roblox'], perc: 100, msg: "🎮 Level-Up! Eure Beziehung hat das höchste Level erreicht! 🎮", note: "Andrin und Roblox - eine Verbindung, die alle Highscores schlägt!" }
-            ];
-
-            let foundSpecial = false;
-            for (const pair of specialPairs) {
-                if ((name1 === pair.names[0] && name2 === pair.names[1]) || 
-                    (name1 === pair.names[1] && name2 === pair.names[0])) {
-                    percentage = pair.perc;
-                    message = pair.msg;
-                    specialNote = pair.note;
-                    foundSpecial = true;
-                    break;
-                }
+            if ((name1 === 'maxi' && name2 === 'alex') || (name1 === 'alex' && name2 === 'maxi')) {
+                percentage = 100;
+                message = "💕 Perfekte Kombination! Diese Verbindung ist einfach magisch! 💕";
+                specialNote = "Maxi und Alex sind ein besonderes Paar - eine Verbindung für die Ewigkeit!";
+            } 
+            else if ((name1 === 'arne' && name2 === 'emilia') || (name1 === 'emilia' && name2 === 'arne')) {
+                percentage = 100;
+                message = "🌟 Traumpaar! Eure Verbindung ist einfach unschlagbar! 🌟";
+                specialNote = "Arne und Emilia sind ein besonderes Paar - eine Liebe wie aus dem Märchen!";
+            } 
+            // Neue 100% Kombinationen
+            else if ((name1 === 'louis' && (name2 === 'formel' || name2 === 'formeln')) || 
+                     ((name1 === 'formel' || name1 === 'formeln') && name2 === 'louis')) {
+                percentage = 100;
+                message = "🧪 Formel für die perfekte Liebe! Eure Chemie stimmt zu 100%! 🧪";
+                specialNote = "Louis und Formel(n) - eine wissenschaftlich bewiesene perfekte Kombination!";
             }
-
-            if (!foundSpecial) {
-                if (name1 === 'emil' || name2 === 'emil') {
-                    percentage = 100;
-                    message = "✨ Emil ist einfach mit jedem kompatibel! Pure Harmonie! ✨";
-                    specialNote = "Emil bringt immer das Beste in jedem Partner hervor!";
+            else if ((name1 === 'wilson' && name2 === 'vanessa') || (name1 === 'vanessa' && name2 === 'wilson')) {
+                percentage = 100;
+                message = "🎾 Matchball! Eure Liebe gewinnt jedes Spiel! 🎾";
+                specialNote = "Wilson und Vanessa - ein unschlagbares Team auf und neben dem Platz!";
+            }
+            else if ((name1 === 'andrin' && name2 === 'roblox') || (name1 === 'roblox' && name2 === 'andrin')) {
+                percentage = 100;
+                message = "🎮 Level-Up! Eure Beziehung hat das höchste Level erreicht! 🎮";
+                specialNote = "Andrin und Roblox - eine Verbindung, die alle Highscores schlägt!";
+            }
+            else if (name1 === 'emil' || name2 === 'emil') {
+                percentage = 100;
+                message = "✨ Emil ist einfach mit jedem kompatibel! Pure Harmonie! ✨";
+                specialNote = "Emil bringt immer das Beste in jedem Partner hervor!";
+            }
+            else {
+                // Zufällige Prozentzahl für andere Kombinationen
+                percentage = Math.floor(Math.random() * 101);
+                
+                // Passende Nachrichten basierend auf dem Prozentsatz
+                if (percentage >= 90) {
+                    message = "💖 Unglaublich! Ihr seid wie füreinander gemacht! 💖";
+                } else if (percentage >= 75) {
+                    message = "😍 Sehr gute Chemie! Das könnte was werden! 😍";
+                } else if (percentage >= 60) {
+                    message = "😊 Gute Voraussetzungen für eine schöne Beziehung! 😊";
+                } else if (percentage >= 40) {
+                    message = "🤔 Es gibt Potential, aber auch einige Herausforderungen.";
+                } else if (percentage >= 20) {
+                    message = "😟 Vielleicht braucht es etwas mehr Arbeit an der Beziehung.";
                 } else {
-                    // Zufällige Prozentzahl für andere Kombinationen
-                    percentage = Math.floor(Math.random() * 101);
-                    
-                    // Passende Nachrichten basierend auf dem Prozentsatz
-                    if (percentage >= 90) {
-                        message = "💖 Unglaublich! Ihr seid wie füreinander gemacht! 💖";
-                    } else if (percentage >= 75) {
-                        message = "😍 Sehr gute Chemie! Das könnte was werden! 😍";
-                    } else if (percentage >= 60) {
-                        message = "😊 Gute Voraussetzungen für eine schöne Beziehung! 😊";
-                    } else if (percentage >= 40) {
-                        message = "🤔 Es gibt Potential, aber auch einige Herausforderungen.";
-                    } else if (percentage >= 20) {
-                        message = "😟 Vielleicht braucht es etwas mehr Arbeit an der Beziehung.";
-                    } else {
-                        message = "😅 Hmm... vielleicht solltet ihr euch erstmal besser kennenlernen.";
-                    }
+                    message = "😅 Hmm... vielleicht solltet ihr euch erstmal besser kennenlernen.";
                 }
             }
             
@@ -591,126 +488,44 @@
             }
         });
         
-        // Video Easter Egg Funktion
-        function showVideoEasterEgg() {
-            const videoContainer = document.getElementById('videoContainer');
-            const video = document.getElementById('secretVideo');
-            const fallbackImage = document.getElementById('fallbackImage');
-            
-            videoContainer.style.display = 'flex';
-            
-            // Auf GitHub Pages verwenden wir ein Fallback-Bild statt Video
-            if (isGitHubPages) {
-                video.style.display = 'none';
-                fallbackImage.style.display = 'block';
-            } else {
-                video.style.display = 'block';
-                fallbackImage.style.display = 'none';
-                video.play().catch(e => {
-                    console.log('Video konnte nicht abgespielt werden:', e);
-                    video.style.display = 'none';
-                    fallbackImage.style.display = 'block';
-                });
-            }
-            
-            // Spezielles Ergebnis anzeigen
-            document.getElementById('displayName1').textContent = "6";
-            document.getElementById('displayName2').textContent = "7";
-            document.getElementById('percentage').textContent = "67%";
-            document.getElementById('message').textContent = "🎉 SECRET EASTER EGG! Du hast das geheime Video freigeschaltet! 🎉";
-            document.getElementById('specialNote').textContent = "6 + 7 = ❤️ Eine magische Kombination!";
-            document.getElementById('result').style.display = 'block';
-            
-            // Speziellen Fortschrittsbalken anzeigen
-            const fill = document.getElementById('compatibilityFill');
-            fill.style.width = '0%';
-            setTimeout(() => {
-                fill.style.width = '67%';
-            }, 100);
-            
-            createSpecialFireworks();
-        }
-        
-        // Video schließen
-        document.getElementById('closeVideo').addEventListener('click', function() {
-            const videoContainer = document.getElementById('videoContainer');
-            const video = document.getElementById('secretVideo');
-            
-            video.pause();
-            video.currentTime = 0;
-            videoContainer.style.display = 'none';
-        });
-        
-        // Klick außerhalb des Videos schließt es
-        document.getElementById('videoContainer').addEventListener('click', function(e) {
-            if (e.target === this) {
-                const video = document.getElementById('secretVideo');
-                video.pause();
-                video.currentTime = 0;
-                this.style.display = 'none';
-            }
-        });
-        
         function createFireworks() {
             const fireworks = document.getElementById('fireworks');
             fireworks.style.display = 'block';
             fireworks.innerHTML = '';
             
             for (let i = 0; i < 50; i++) {
-                createSingleFirework(fireworks, 200);
+                const firework = document.createElement('div');
+                firework.className = 'firework';
+                
+                // Zufällige Position
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // Zufällige Bewegung
+                const tx = (Math.random() - 0.5) * 200;
+                const ty = (Math.random() - 0.5) * 200;
+                
+                firework.style.left = x + '%';
+                firework.style.top = y + '%';
+                firework.style.setProperty('--tx', tx + 'px');
+                firework.style.setProperty('--ty', ty + 'px');
+                
+                // Zufällige Farbe
+                const colors = ['#ff6b6b', '#ff8e8e', '#a1c4fd', '#ffd93d', '#6bcf7f'];
+                firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                fireworks.appendChild(firework);
+                
+                // Nach der Animation entfernen
+                setTimeout(() => {
+                    firework.remove();
+                }, 1000);
             }
             
+            // Feuerwerk nach 1.5 Sekunden ausblenden
             setTimeout(() => {
                 fireworks.style.display = 'none';
             }, 1500);
-        }
-        
-        function createSpecialFireworks() {
-            const fireworks = document.getElementById('fireworks');
-            fireworks.style.display = 'block';
-            fireworks.innerHTML = '';
-            
-            for (let i = 0; i < 100; i++) {
-                createSingleFirework(fireworks, 300, true);
-            }
-            
-            setTimeout(() => {
-                fireworks.style.display = 'none';
-            }, 2000);
-        }
-        
-        function createSingleFirework(container, maxDistance, isSpecial = false) {
-            const firework = document.createElement('div');
-            firework.className = 'firework';
-            
-            const x = Math.random() * 100;
-            const y = Math.random() * 100;
-            const tx = (Math.random() - 0.5) * maxDistance;
-            const ty = (Math.random() - 0.5) * maxDistance;
-            
-            firework.style.left = x + '%';
-            firework.style.top = y + '%';
-            firework.style.setProperty('--tx', tx + 'px');
-            firework.style.setProperty('--ty', ty + 'px');
-            
-            const colors = isSpecial 
-                ? ['#ff6b6b', '#ff8e8e', '#a1c4fd', '#ffd93d', '#6bcf7f', '#ff6bc9', '#6bffc9']
-                : ['#ff6b6b', '#ff8e8e', '#a1c4fd', '#ffd93d', '#6bcf7f'];
-            
-            firework.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            
-            if (isSpecial) {
-                firework.style.width = '8px';
-                firework.style.height = '8px';
-            }
-            
-            container.appendChild(firework);
-            
-            setTimeout(() => {
-                if (firework.parentNode) {
-                    firework.remove();
-                }
-            }, isSpecial ? 1500 : 1000);
         }
         
         // Eingabefelder mit Enter-Taste bedienbar machen
@@ -724,11 +539,6 @@
             if (event.key === 'Enter') {
                 document.getElementById('calculate').click();
             }
-        });
-
-        // Verbesserte Fehlerbehandlung
-        window.addEventListener('error', function(e) {
-            console.log('Fehler aufgetreten:', e.error);
         });
     </script>
 </body>
